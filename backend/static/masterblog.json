@@ -1,0 +1,260 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Master Blog API",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "http://localhost:5002" }],
+  "tags": [
+    { "name": "Post", "description": "Post API - CRUD" },
+    { "name": "User", "description": "User API - Registration and Login" }
+  ],
+  "paths": {
+    "/api/posts": {
+      "get": {
+        "summary": "Returns all posts",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Field to sort by (title or content)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Sort order (asc or desc)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new post",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Post object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewPost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Post created successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/posts/{id}": {
+      "get": {
+        "summary": "Gets a post by ID",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Post not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates a post by ID",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Post object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post updated successfully"
+          },
+          "404": {
+            "description": "Post not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a post by ID",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post deleted successfully"
+          },
+          "404": {
+            "description": "Post not found"
+          }
+        }
+      }
+    },
+    "/api/posts/search": {
+      "get": {
+        "summary": "Searches posts by title or content",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Search term for title",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "description": "Search term for content",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "Registers a new user",
+        "produces": ["application/json"],
+        "tags": ["User"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be registered",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Logs in a user",
+        "produces": ["application/json"],
+        "tags": ["User"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful"
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "NewPost": {
+      "type": "object",
+      "required": ["title", "content"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "My New Post"
+        },
+        "content": {
+          "type": "string",
+          "example": "This is the content of my new post."
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": ["username", "password"],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "testuser"
+        },
+        "password": {
+          "type": "string",
+          "example": "testpassword"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
