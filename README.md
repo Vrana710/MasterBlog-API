@@ -23,11 +23,11 @@ MasterBlog-API
 
 ```
 
-## Clone the repository:**
+## Clone the repository:
    ```sh
    git clone https://github.com/Vrana710/MasterBlog-API.git
    ```
-## Navigate into the project directory:**
+## Navigate into the project directory:
    ```sh
    cd MasterBlog-API
    ```
