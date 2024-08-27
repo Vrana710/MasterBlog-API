@@ -57,7 +57,10 @@ function addPost() {
     fetch(baseUrl + '/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: postTitle, content: postContent, author: postAuthor, date: postDate})
+        body: JSON.stringify({ title: postTitle, 
+                                content: postContent, 
+                                author: postAuthor, 
+                                date: postDate})
     })
     .then(response => response.json())  // Parse the JSON data from the response
     .then(post => {

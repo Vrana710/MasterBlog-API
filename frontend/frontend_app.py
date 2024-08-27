@@ -5,6 +5,17 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
+    """
+    This function is the route handler for 
+    the root URL ("/") of the web application.
+    It returns the rendered HTML template "index.html".
+
+    Parameters:
+    None
+
+    Returns:
+    str: The rendered HTML content of the "index.html" template.
+    """
     return render_template("index.html")
 
 
